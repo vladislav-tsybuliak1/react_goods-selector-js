@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { useState } from 'react';
+
 import 'bulma/css/bulma.css';
 import './App.scss';
 
@@ -17,31 +18,29 @@ export const goods = [
 ];
 
 export const App = () => {
-  const [good, setGood] = useState('');
+  const [good, setGood] = useState('Jam');
 
   return (
     <main className="section container">
-      {good === '' ? (
-        <h1 className="title is-flex is-align-items-center">
-          No goods selected
-        </h1>
-      ) : (
-        <h1 className="title is-flex is-align-items-center">
-          {good} is selected
+      <h1 className="title is-flex is-align-items-center">
+        {good ? `${good} is selected` : 'No goods selected'}
+
+        {good && (
           <button
             data-cy="ClearButton"
             type="button"
             className="delete ml-3"
-            onClick={() => setGood('')}
+            onClick={() => setGood(null)}
           />
-        </h1>
-      )}
+        )}
+      </h1>
 
       <table className="table">
         <tbody>
           {goods.map(goodFromList => (
             <tr
               data-cy="Good"
+              key={goodFromList}
               className={classNames({
                 'has-background-success-light': goodFromList === good,
               })}
@@ -52,7 +51,7 @@ export const App = () => {
                     data-cy="RemoveButton"
                     type="button"
                     className="button is-info"
-                    onClick={() => setGood('')}
+                    onClick={() => setGood(null)}
                   >
                     -
                   </button>
